@@ -5,6 +5,9 @@ use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\EnderecoController;
 
 Route::get('/', [PessoaController::class, 'index'])->name('pessoas.index');
+Route::resource('pessoas', PessoaController::class);
+Route::resource('pessoas.enderecos', EnderecoController::class)->shallow();
+Route::get('/', [PessoaController::class, 'index'])->name('pessoas.index');
 Route::get('/pessoas/create', [PessoaController::class, 'create'])->name('pessoas.create');
 Route::post('/pessoas', [PessoaController::class, 'store'])->name('pessoas.store');
 Route::get('/pessoas/{id}', [PessoaController::class, 'show'])->name('pessoas.show');
