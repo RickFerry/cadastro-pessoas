@@ -64,3 +64,34 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Diagrama de clases
+
+```mermaid
+classDiagram
+    class Pessoa {
+        +int id
+        +String nome
+        +String nome_social
+        +String cpf
+        +String nome_pai
+        +String nome_mae
+        +String telefone
+        +String email
+    }
+    
+    class Endereco {
+        +int id
+        +int pessoa_id
+        +String tipo
+        +String cep
+        +String logradouro
+        +String numero
+        +String complemento
+        +String bairro
+        +String estado
+        +String cidade
+    }
+
+    Pessoa "1" --> "0..*" Endereco
+```

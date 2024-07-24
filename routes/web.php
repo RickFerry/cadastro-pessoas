@@ -4,19 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PessoaController;
 use App\Http\Controllers\EnderecoController;
 
-Route::get('/', [PessoaController::class, 'index'])->name('pessoas.index');
-Route::resource('pessoas', PessoaController::class);
-Route::resource('pessoas.enderecos', EnderecoController::class)->shallow();
-Route::get('/', [PessoaController::class, 'index'])->name('pessoas.index');
-Route::get('/pessoas/create', [PessoaController::class, 'create'])->name('pessoas.create');
-Route::post('/pessoas', [PessoaController::class, 'store'])->name('pessoas.store');
-Route::get('/pessoas/{id}', [PessoaController::class, 'show'])->name('pessoas.show');
-Route::get('/pessoas/{id}/edit', [PessoaController::class, 'edit'])->name('pessoas.edit');
-Route::put('/pessoas/{id}', [PessoaController::class, 'update'])->name('pessoas.update');
+Route::prefix('pessoas')->group(function () {
+    Route::get('/', [PessoaController::class, 'index'])->name('pessoas.index');
+    Route::get('/create', [PessoaController::class, 'create'])->name('pessoas.create');
+    Route::post('/', [PessoaController::class, 'store'])->name('pessoas.store');
+    Route::get('/{id}', [PessoaController::class, 'show'])->name('pessoas.show');
+    Route::get('/{id}/edit', [PessoaController::class, 'edit'])->name('pessoas.edit');
+    Route::put('/{id}', [PessoaController::class, 'update'])->name('pessoas.update');
+    // Define rotas para endereços relacionados a pessoas, utilizando shallow nesting
+    Route::resource('/{pessoa}/enderecos', EnderecoController::class)->shallow();
+});
 
-Route::post('/pessoas/{id}/enderecos', [EnderecoController::class, 'store'])->name('enderecos.store');
-Route::put('/enderecos/{id}', [EnderecoController::class, 'update'])->name('enderecos.update');
-
+// Rota inicial simplificada, sem repetição
 Route::get('/', function () {
     return view('welcome');
 });
